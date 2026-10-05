@@ -1,3 +1,14 @@
+# Excluir archivos temporales dentro de la carpeta del proyecto ClubBouncer
+ClubBouncer/[Ll]ibrary/
+ClubBouncer/[Tt]emp/
+ClubBouncer/[Oo]bj/
+ClubBouncer/[Bb]uild/
+ClubBouncer/[Bb]uilds/
+ClubBouncer/[Ll]ogs/
+ClubBouncer/[Uu]ser[Ss]ettings/
+ClubBouncer/.vscode/
+ClubBouncer/.vs/
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
