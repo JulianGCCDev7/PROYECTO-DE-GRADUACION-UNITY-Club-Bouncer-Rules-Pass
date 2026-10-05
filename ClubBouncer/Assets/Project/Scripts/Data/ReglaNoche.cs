@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ReglaNoche : MonoBehaviour
+[CreateAssetMenu(fileName = "ReglaNoche_1", menuName = "Club Bouncer/Regla Noche")]
+public class ReglaNoche : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Reglas de la Noche")]
+    public int edadMinima = 21;
+    public bool permitirEbrios = false;
+    public bool permitirArmas = false;
+    public TipoVestimenta vestimentaExigida = TipoVestimenta.Formal;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Configuración de Noche")]
+    public string tituloNoche = "Noche VIP";
+    public int metaClientesCorrectos = 10;
+    public int penalizacionDineroError = 50;
 }
