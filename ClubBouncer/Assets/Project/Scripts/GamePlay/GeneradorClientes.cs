@@ -3,43 +3,45 @@ using UnityEngine;
 
 public class GeneradorClientes : MonoBehaviour
 {
-    [Header("Lista de Clientes de la Noche")]
-    public List<ClienteData> listaClientes = new List<ClienteData>();
-
-    [Header("Referencias")]
+    public List<ClienteData> listaClientes;
     public ControladorUI controladorUI;
-
+    
     private int indiceActual = 0;
 
     private void Start()
     {
-        // Carga al primer cliente al iniciar la escena
-        if (listaClientes.Count > 0)
-        {
-            CargarClienteActual();
-        }
+        CargarClienteActual();
     }
 
-    public void PasaraSiguienteCliente()
+    public void CargarClienteActual()
     {
-        indiceActual++;
-
-        if (indiceActual < listaClientes.Count)
+        if (listaClientes != null && indiceActual < listaClientes.Count)
         {
-            CargarClienteActual();
+            if (controladorUI != null)
+            {
+                controladorUI.MostrarCliente(listaClientes[indiceActual]);
+            }
         }
         else
         {
-            Debug.Log("<color=yellow>¡Noche terminada! No hay más clientes en la fila.</color>");
-            // Aquí luego pondremos la pantalla de Resumen de Fin de Noche
+            Debug.Log("¡Se terminaron los clientes de la fila por hoy!");
+            if (controladorUI != null)
+            {
+                controladorUI.ToggleTarjeta(false);
+            }
         }
     }
 
-    private void CargarClienteActual()
+    public void SiguienteCliente()
     {
-        if (controladorUI != null && listaClientes[indiceActual] != null)
-        {
-            controladorUI.CargarCliente(listaClientes[indiceActual]);
-        }
+        indiceActual++;
+        CargarClienteActual();
+    }
+
+    public ClienteData ObtenerClienteActual()
+    {
+        if (listaClientes != null && indiceActual < listaClientes.Count)
+            return listaClientes[indiceActual];
+        return null;
     }
 }

@@ -1,69 +1,87 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
 
 public class ControladorUI : MonoBehaviour
 {
+    [Header("Panel Principal de la Tarjeta")]
+    public GameObject panelTarjetaID;
+
     [Header("Referencias de Scripts")]
     public EvaluadorPortero evaluador;
+    public GeneradorClientes generador;
 
     [Header("Elementos de la Tarjeta ID")]
-    public TMP_Text textoNombre;
-    public TMP_Text textoEdad;
-    public TMP_Text textoVestimenta;
-    public TMP_Text textoEstado;
+    public TextMeshProUGUI textoNombre;
+    public TextMeshProUGUI textoEdad;
+    public TextMeshProUGUI textoVestimenta;
+    public TextMeshProUGUI textoEstado;
     public Image imagenFoto;
 
     [Header("Estadísticas en Pantalla")]
-    public TMP_Text textoDinero;
-    public TMP_Text textoErrores;
+    public TextMeshProUGUI textoDinero;
+    public TextMeshProUGUI textoErrores;
 
     [Header("Cliente Actual de Prueba")]
     public ClienteData clienteActual;
 
-    private void Start()
+    // Método para abrir / cerrar la tarjeta como Pop-up
+    public void ToggleTarjeta(bool mostrar)
     {
-        ActualizarPantalla();
-    }
-
-    public void CargarCliente(ClienteData nuevoCliente)
-    {
-        clienteActual = nuevoCliente;
-        
-        if (clienteActual != null)
+        if (panelTarjetaID != null)
         {
-            textoNombre.text = "Nombre: " + clienteActual.nombreCliente;
-            textoEdad.text = "Edad: " + clienteActual.edad + " años";
-            textoVestimenta.text = "Ropa: " + clienteActual.vestimenta.ToString();
-            textoEstado.text = clienteActual.estaEbrio ? "Estado: EBRIO" : "Estado: Sobrio";
-            
-            if (clienteActual.fotoDocumento != null)
-            {
-                imagenFoto.sprite = clienteActual.fotoDocumento;
-            }
+            panelTarjetaID.SetActive(mostrar);
         }
     }
 
-    public void PresionarAceptar()
+    public void MostrarCliente(ClienteData cliente)
     {
-        if (clienteActual == null) return;
-        evaluador.DecidirEntrada(clienteActual, true);
-        ActualizarPantalla();
+        clienteActual = cliente;
+        if (cliente == null) return;
+
+        if (textoNombre != null) textoNombre.text = "Nombre: " + cliente.nombreCliente;
+        if (textoEdad != null) textoEdad.text = "Edad: " + cliente.edad + " años";
+        if (textoVestimenta != null) textoVestimenta.text = "Ropa: " + cliente.vestimenta;
+        
+        // Si tienes la variable 'estaEbrio' en tu ClienteData
+        if (textoEstado != null)
+        {
+            textoEstado.text = "Estado: " + (cliente.estaEbrio ? "Ebrio" : "Sobrio");
+        }
     }
 
-    public void PresionarRechazar()
-    {
-        if (clienteActual == null) return;
-        evaluador.DecidirEntrada(clienteActual, false);
-        ActualizarPantalla();
-    }
-
-    private void ActualizarPantalla()
+    public void ActualizarPantalla()
     {
         if (evaluador != null)
         {
             if (textoDinero != null) textoDinero.text = "Dinero: $" + evaluador.dineroAcumulado;
             if (textoErrores != null) textoErrores.text = "Errores: " + evaluador.errores + "/3";
+        }
+    }
+
+    public void BotonAceptar()
+    {
+        ProcesarDecision(true);
+    }
+
+    public void BotonRechazar()
+    {
+        ProcesarDecision(false);
+    }
+
+    private void ProcesarDecision(bool aceptado)
+    {
+        if (generador != null && evaluador != null && clienteActual != null)
+        {
+            // Llama a DecidirEntrada de tu EvaluadorPortero
+            evaluador.DecidirEntrada(clienteActual, aceptado);
+            ActualizarPantalla();
+            
+            // Avanza al siguiente cliente de la lista
+            generador.SiguienteCliente();
+            
+            // Cierra la tarjeta emergente automáticamente
+            ToggleTarjeta(false);
         }
     }
 }
