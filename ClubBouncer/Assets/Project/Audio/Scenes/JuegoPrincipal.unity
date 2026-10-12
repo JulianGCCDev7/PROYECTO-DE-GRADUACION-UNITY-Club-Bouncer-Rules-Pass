@@ -50338,6 +50338,7 @@ GameObject:
   - component: {fileID: 593321363}
   - component: {fileID: 593321365}
   - component: {fileID: 593321364}
+  - component: {fileID: 593321366}
   m_Layer: 0
   m_Name: Tilemap_Suelo
   m_TagString: Untagged
@@ -51699,6 +51700,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &593321366
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593321362}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!114 &594438815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92006,11 +92043,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7812170605865486855, guid: 154d18a62ca9f0c42ad855c99eb36cd7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.050598
+      value: -5.62
       objectReference: {fileID: 0}
     - target: {fileID: 7812170605865486855, guid: 154d18a62ca9f0c42ad855c99eb36cd7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.548039
+      value: -7.19
       objectReference: {fileID: 0}
     - target: {fileID: 7812170605865486855, guid: 154d18a62ca9f0c42ad855c99eb36cd7, type: 3}
       propertyPath: m_LocalPosition.z
