@@ -13,6 +13,7 @@ public class MovimientoNPC : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private bool haLlegado = false;
+    
 
     void Start()
     {
@@ -72,5 +73,7 @@ public class MovimientoNPC : MonoBehaviour
         {
             spriteRenderer.sprite = spriteIdleFrente;
         }
+
+        FindObjectOfType<ControlInteraccion>().LlegoNPC();
     }
 }
