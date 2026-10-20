@@ -76,4 +76,20 @@ public class MovimientoNPC : MonoBehaviour
 
         FindObjectOfType<ControlInteraccion>().LlegoNPC();
     }
+    // Método llamado al presionar ACEPTAR
+    public void AccionAceptar()
+    {
+        // Aquí puedes poner la lógica cuando el NPC entra
+        Destroy(gameObject, 1f); 
+    }
+
+    // Método llamado al presionar RECHAZAR
+    public void AccionRechazar()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = true; // Voltea el sprite para que regrese
+        }
+        Destroy(gameObject, 1.5f); 
+    }
 }

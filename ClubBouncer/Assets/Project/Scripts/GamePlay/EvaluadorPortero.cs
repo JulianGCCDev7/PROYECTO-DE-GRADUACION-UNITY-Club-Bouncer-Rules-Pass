@@ -1,83 +1,107 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
-public class EvaluadorPortero : MonoBehaviour
+public class ControladorUI : MonoBehaviour
 {
-    [Header("Configuración Activa")]
-    public ReglaNoche reglaActual;
+    [Header("Panel Principal de la Tarjeta")]
+    public GameObject panelTarjetaID;
 
-    [Header("Estadísticas del Turno")]
-    public int clientesProcesados = 0;
-    public int aciertos = 0;
-    public int errores = 0;
-    public int dineroAcumulado = 0;
+    [Header("Referencias de Scripts")]
+    public EvaluadorPortero evaluador;
+    public GeneradorClientes generador;
 
-    /// <summary>
-    /// Evalúa si el cliente cumple absolutamente TODAS las reglas de la noche.
-    /// Devuelve TRUE si debe entrar, FALSE si debe ser rechazado.
-    /// </summary>
-    public bool EvaluarCliente(ClienteData cliente)
+    [Header("Elementos de la Tarjeta ID")]
+    public TextMeshProUGUI textoNombre;
+    public TextMeshProUGUI textoEdad;
+    public TextMeshProUGUI textoVestimenta;
+    public TextMeshProUGUI textoEstado;
+    public Image imagenFoto;
+
+    [Header("Estadísticas en Pantalla")]
+    public TextMeshProUGUI textoDinero;
+    public TextMeshProUGUI textoErrores;
+
+    [Header("Aviso de Resultado en Pantalla")]
+    [Tooltip("Arrastra aquí tu objeto TextoAvisoResultado del Canvas")]
+    public TextMeshProUGUI textoAvisoResultado;
+
+    [Header("Cliente Actual de Prueba")]
+    public ClienteData clienteActual;
+
+    private void Start()
     {
-        if (cliente == null || reglaActual == null)
+        if (textoAvisoResultado != null)
         {
-            Debug.LogError("Error: Falta asignar el cliente o la regla actual en EvaluadorPortero.");
-            return false;
+            textoAvisoResultado.text = "";
         }
-
-        // Regla 1: Edad mínima
-        if (cliente.edad < reglaActual.edadMinima)
-        {
-            return false; // Rechazado por menor de edad
-        }
-
-        // Regla 2: Documento falso
-        if (cliente.tieneDocumentoFalso)
-        {
-            return false; // Rechazado por documento falso
-        }
-
-        // Regla 3: Portación de armas
-        if (cliente.portaArmas && !reglaActual.permitirArmas)
-        {
-            return false; // Rechazado por armamento
-        }
-
-        // Regla 4: Estado de ebriedad
-        if (cliente.estaEbrio && !reglaActual.permitirEbrios)
-        {
-            return false; // Rechazado por ebrio
-        }
-
-        // Regla 5: Código de vestimenta
-        if (cliente.vestimenta != reglaActual.vestimentaExigida)
-        {
-            return false; // Rechazado por vestimenta incorrecta
-        }
-
-        // Si pasa todas las validaciones, el cliente es apto para entrar
-        return true;
     }
 
-    /// <summary>
-    /// Procesa la decisión del portero (Aceptar o Rechazar) y calcula el resultado.
-    /// </summary>
-    public void DecidirEntrada(ClienteData cliente, bool permitioPaso)
+    public void ToggleTarjeta(bool mostrar)
     {
-        bool clienteEsValido = EvaluarCliente(cliente);
-        clientesProcesados++;
-
-        if (permitioPaso == clienteEsValido)
+        if (panelTarjetaID != null)
         {
-            // ¡Decisión correcta!
-            aciertos++;
-            dineroAcumulado += 20; // Recompensa por acierto
-            Debug.Log($"<color=green>¡Acierto!</color> Decisión correcta con {cliente.nombreCliente}. Dinero actual: ${dineroAcumulado}");
+            panelTarjetaID.SetActive(mostrar);
+        }
+    }
+
+    public void MostrarCliente(ClienteData cliente)
+    {
+        clienteActual = cliente;
+        if (cliente == null) return;
+
+        if (textoNombre != null) textoNombre.text = "Nombre: " + cliente.nombreCliente;
+        if (textoEdad != null) textoEdad.text = "Edad: " + cliente.edad + " años";
+        if (textoVestimenta != null) textoVestimenta.text = "Ropa: " + cliente.vestimenta;
+        
+        if (textoEstado != null)
+        {
+            textoEstado.text = "Estado: " + (cliente.estaEbrio ? "Ebrio" : "Sobrio");
+        }
+    }
+
+    public void ActualizarPantalla()
+    {
+        if (evaluador != null)
+        {
+            if (textoDinero != null) textoDinero.text = "Dinero: $" + evaluador.dineroAcumulado;
+            if (textoErrores != null) textoErrores.text = "Errores: " + evaluador.errores + "/3";
+        }
+    }
+
+    public void BotonAceptar()
+    {
+        ProcesarDecision(true);
+    }
+
+    public void BotonRechazar()
+    {
+        ProcesarDecision(false);
+    }
+
+    private void ProcesarDecision(bool aceptado)
+    {
+        if (evaluador != null && clienteActual != null)
+        {
+            string mensajeResultado = evaluador.DecidirEntrada(clienteActual, aceptado);
+
+            if (textoAvisoResultado != null)
+            {
+                textoAvisoResultado.text = mensajeResultado;
+            }
+
+            ActualizarPantalla();
+            
+            if (generador != null)
+            {
+                generador.SiguienteCliente();
+            }
+            
+            ToggleTarjeta(false);
         }
         else
         {
-            // Decisión errónea
-            errores++;
-            dineroAcumulado -= reglaActual.penalizacionDineroError; // Penalización por error
-            Debug.LogWarning($"<color=red>¡Error!</color> Decisión equivocada con {cliente.nombreCliente}. Errores: {errores}/3. Dinero actual: ${dineroAcumulado}");
+            Debug.LogWarning("Falta asignar el Evaluador o el Cliente Actual en ControladorUI.");
         }
     }
 }

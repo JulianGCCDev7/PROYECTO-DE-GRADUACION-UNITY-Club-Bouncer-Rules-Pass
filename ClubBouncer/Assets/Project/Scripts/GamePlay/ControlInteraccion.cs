@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro; // Necesario para controlar los textos de TextMeshPro
 
 public class ControlInteraccion : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class ControlInteraccion : MonoBehaviour
     [Tooltip("Arrastra aquí tu Panel de TarjetaID del Canvas")]
     public GameObject tarjetaID;
 
+    [Header("Texto de Aviso en Pantalla")]
+    [Tooltip("Arrastra aquí el texto del Canvas (TextoErrores o TextoAviso) para mostrar los resultados.")]
+    public TextMeshProUGUI textoAvisoResultado;
+
     [Header("Estados de Control")]
     public bool npcEnLaPuerta = false;
     private bool tarjetaAbierta = false;
@@ -18,6 +23,9 @@ public class ControlInteraccion : MonoBehaviour
         // Asegurarnos de que la UI empiece oculta al iniciar la escena
         if (botonInspeccionar != null) botonInspeccionar.SetActive(false);
         if (tarjetaID != null) tarjetaID.SetActive(false);
+        
+        // Añade esta línea para que el texto empiece vacío al iniciar el juego:
+        if (textoAvisoResultado != null) textoAvisoResultado.text = "";
     }
 
     private void Update()
@@ -67,10 +75,7 @@ public class ControlInteraccion : MonoBehaviour
     /// </summary>
     public void BotonAceptar()
     {
-        Debug.Log("Cliente ACEPTADO");
-        CerrarTarjeta();
-
-        // Aquí puedes invocar la animación/movimiento para que el NPC entre al club
+        ProcesarDecision(true);
     }
 
     /// <summary>
@@ -78,10 +83,40 @@ public class ControlInteraccion : MonoBehaviour
     /// </summary>
     public void BotonRechazar()
     {
-        Debug.Log("Cliente RECHAZADO");
-        CerrarTarjeta();
+        ProcesarDecision(false);
+    }
 
-        // Aquí puedes invocar la animación/movimiento para que el NPC se retire
+    /// <summary>
+    /// Evalúa la decisión con EvaluadorPortero y actualiza la UI y el NPC.
+    /// </summary>
+    private void ProcesarDecision(bool permitioPaso)
+    {
+        MovimientoNPC npcActual = FindObjectOfType<MovimientoNPC>();
+        EvaluadorPortero evaluador = FindObjectOfType<EvaluadorPortero>();
+
+        if (evaluador != null)
+        {
+            // Mensaje provisional visible en UI mientras conectamos el ClienteData exacto
+            if (textoAvisoResultado != null)
+            {
+                textoAvisoResultado.text = permitioPaso ? "Cliente Aceptado" : "¡Error! Cliente rechazado";
+            }
+        }
+
+        // Ejecutar acción física en el NPC
+        if (npcActual != null)
+        {
+            if (permitioPaso)
+            {
+                npcActual.AccionAceptar();
+            }
+            else
+            {
+                npcActual.AccionRechazar();
+            }
+        }
+
+        CerrarTarjeta();
     }
 
     /// <summary>
