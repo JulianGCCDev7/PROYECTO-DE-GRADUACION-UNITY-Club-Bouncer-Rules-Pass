@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Regla_Noche1
   m_EditorClassIdentifier: 
   edadMinima: 21
-  permitirEbrios: 0
+  permitirEbrios: 1
   permitirArmas: 0
   vestimentaExigida: 0
   tituloNoche: Noche VIP

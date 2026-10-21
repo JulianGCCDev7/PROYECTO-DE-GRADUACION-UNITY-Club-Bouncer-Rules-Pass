@@ -10,55 +10,59 @@ public class MovimientoNPC : MonoBehaviour
 
     private Transform puntoDestino;
     private Transform puntoSalida;
+    private Transform puntoInicio;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private bool haLlegado = false;
     private bool estaSaliendo = false;
-    
+    private Vector3 posicionInicial;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Buscar los puntos en la jerarquía
+        // Buscar puntos de referencia
         GameObject objetoDestino = GameObject.Find("PuntoDestinoPuerto");
         GameObject objetoSalida = GameObject.Find("PuntoSalidaDerecha");
+        GameObject objetoInicio = GameObject.Find("PuntoInicioIzquierda");
         
         if (objetoDestino != null) puntoDestino = objetoDestino.transform;
         if (objetoSalida != null) puntoSalida = objetoSalida.transform;
+        if (objetoInicio != null) puntoInicio = objetoInicio.transform;
 
-        if (objetoDestino == null) Debug.LogError("No se encontró 'PuntoDestinoPuerto'.");
-        if (objetoSalida == null) Debug.LogError("No se encontró 'PuntoSalidaDerecha'.");
-
-        // Activar animación al iniciar
-        if (animator != null)
+        if (objetoInicio != null)
         {
-            animator.enabled = true;
-            animator.Play("Animacion NPC Caminando", 0, 0f);
+            posicionInicial = objetoInicio.transform.position;
         }
+        else
+        {
+            posicionInicial = transform.position;
+        }
+
+        IniciarCaminata();
     }
 
     void Update()
     {
-        // Si fue rechazado y va caminado hacia el punto de salida derecho
+        // 1. Si fue RECHAZADO: camina hacia la derecha (salida)
         if (estaSaliendo && puntoSalida != null)
         {
             float paso = velocidad * Time.deltaTime;
             Vector3 objetivoSalida = new Vector3(puntoSalida.position.x, transform.position.y, transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, objetivoSalida, paso);
 
-            // Destruir al llegar al punto de salida fuera de pantalla
             if (Mathf.Abs(transform.position.x - puntoSalida.position.x) < 0.05f)
             {
-                Destroy(gameObject);
+                ReiniciarAlPuntoInicial();
             }
             return;
         }
 
         if (puntoDestino == null || haLlegado) return;
 
-        // Movimiento normal hacia la puerta
+        // 2. Movimiento NORMAL hacia la puerta del club
         float pasoNormal = velocidad * Time.deltaTime;
         Vector3 objetivo = new Vector3(puntoDestino.position.x, transform.position.y, transform.position.z);
         
@@ -77,17 +81,17 @@ public class MovimientoNPC : MonoBehaviour
         if (animator != null) animator.enabled = false;
         if (spriteRenderer != null && spriteIdleFrente != null) spriteRenderer.sprite = spriteIdleFrente;
 
-        FindObjectOfType<ControlInteraccion>().LlegoNPC();
+        FindObjectOfType<ControlInteraccion>()?.LlegoNPC();
     }
     
     public void AccionAceptar()
     {
-        Destroy(gameObject, 1f); 
+        // Espera 1.5 segundos antes de reiniciar y limpiar el texto cuando es aceptado
+        Invoke(nameof(ReiniciarAlPuntoInicial), 1.5f);
     }
 
     public void AccionRechazar()
     {
-        // Reactivar la animación y orientar a la derecha
         if (animator != null)
         {
             animator.enabled = true;
@@ -99,7 +103,39 @@ public class MovimientoNPC : MonoBehaviour
             spriteRenderer.flipX = false; 
         }
 
-        // Indicar que se dirige hacia el punto de salida
         estaSaliendo = true;
+    }
+
+    public void ReiniciarAlPuntoInicial()
+    {
+        estaSaliendo = false;
+        haLlegado = false;
+        transform.position = posicionInicial;
+
+        // Limpiar el texto de aviso buscando el ControladorUI que es donde vive el texto
+        ControladorUI controlUI = FindObjectOfType<ControladorUI>();
+        if (controlUI != null && controlUI.textoAvisoResultado != null)
+        {
+            controlUI.textoAvisoResultado.text = "";
+        }
+
+        // Cargar el siguiente cliente en la lista
+        GeneradorClientes generador = FindObjectOfType<GeneradorClientes>();
+        if (generador != null)
+        {
+            generador.SiguienteCliente();
+        }
+
+        // Reiniciar la caminata
+        IniciarCaminata();
+    }
+
+    private void IniciarCaminata()
+    {
+        if (animator != null)
+        {
+            animator.enabled = true;
+            animator.Play("Animacion NPC Caminando", 0, 0f);
+        }
     }
 }

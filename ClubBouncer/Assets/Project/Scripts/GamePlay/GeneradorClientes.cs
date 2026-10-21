@@ -17,9 +17,22 @@ public class GeneradorClientes : MonoBehaviour
     {
         if (listaClientes != null && indiceActual < listaClientes.Count)
         {
+            ClienteData clienteActual = listaClientes[indiceActual];
+
             if (controladorUI != null)
             {
-                controladorUI.MostrarCliente(listaClientes[indiceActual]);
+                controladorUI.MostrarCliente(clienteActual);
+            }
+
+            // Actualizar el Sprite del NPC físico en la escena
+            MovimientoNPC npcMovimiento = FindObjectOfType<MovimientoNPC>();
+            if (npcMovimiento != null && clienteActual.spriteCuerpoCliente != null)
+            {
+                SpriteRenderer sr = npcMovimiento.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sprite = clienteActual.spriteCuerpoCliente;
+                }
             }
         }
         else

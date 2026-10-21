@@ -5,11 +5,25 @@ public class EvaluadorPortero : MonoBehaviour
     [Header("Configuración Activa")]
     public ReglaNoche reglaActual;
 
+    [Header("Referencias UI")]
+    public ControladorUI controladorUI; // Referencia para actualizar los textos del dinero/errores en pantalla
+
     [Header("Estadísticas del Turno")]
     public int clientesProcesados = 0;
     public int aciertos = 0;
     public int errores = 0;
     public int dineroAcumulado = 0;
+
+    private void Start()
+    {
+        if (controladorUI == null)
+        {
+            controladorUI = FindObjectOfType<ControladorUI>();
+        }
+        
+        // Actualizar la pantalla al iniciar la noche
+        ActualizarHUD();
+    }
 
     /// <summary>
     /// Evalúa si el cliente cumple absolutamente TODAS las reglas de la noche.
@@ -66,6 +80,8 @@ public class EvaluadorPortero : MonoBehaviour
         clientesProcesados++;
         string mensajeResultado = "";
 
+        int penalizacion = (reglaActual != null) ? reglaActual.penalizacionDineroError : 10;
+
         if (permitioPaso == clienteEsValido)
         {
             // ¡Decisión correcta!
@@ -78,11 +94,22 @@ public class EvaluadorPortero : MonoBehaviour
         {
             // Decisión errónea
             errores++;
-            dineroAcumulado -= reglaActual.penalizacionDineroError; // Penalización por error
+            dineroAcumulado -= penalizacion; // Penalización por error
             mensajeResultado = $"¡Error! Decisión equivocada con {cliente.nombreCliente}. Errores: {errores}/3. Dinero: ${dineroAcumulado}";
             Debug.LogWarning($"<color=red>{mensajeResultado}</color>");
         }
 
+        // Actualizamos los contadores visuales en pantalla
+        ActualizarHUD();
+
         return mensajeResultado;
+    }
+
+    private void ActualizarHUD()
+    {
+        if (controladorUI != null)
+        {
+            controladorUI.ActualizarEstadisticas(dineroAcumulado, errores);
+        }
     }
 }

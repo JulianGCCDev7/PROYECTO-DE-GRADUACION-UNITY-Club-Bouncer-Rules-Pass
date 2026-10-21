@@ -60,12 +60,20 @@ public class ControladorUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método llamado por EvaluadorPortero para actualizar los contadores de dinero y errores.
+    /// </summary>
+    public void ActualizarEstadisticas(int dinero, int errores)
+    {
+        if (textoDinero != null) textoDinero.text = "Dinero: $" + dinero;
+        if (textoErrores != null) textoErrores.text = "Errores: " + errores + "/3";
+    }
+
     public void ActualizarPantalla()
     {
         if (evaluador != null)
         {
-            if (textoDinero != null) textoDinero.text = "Dinero: $" + evaluador.dineroAcumulado;
-            if (textoErrores != null) textoErrores.text = "Errores: " + evaluador.errores + "/3";
+            ActualizarEstadisticas(evaluador.dineroAcumulado, evaluador.errores);
         }
     }
 

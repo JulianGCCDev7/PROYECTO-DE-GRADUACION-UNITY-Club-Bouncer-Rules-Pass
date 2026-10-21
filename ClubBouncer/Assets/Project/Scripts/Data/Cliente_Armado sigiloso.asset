@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279f787a6f2aecc468a0e7bce4ec9148, type: 3}
+  m_Name: Cliente_Armado sigiloso
+  m_EditorClassIdentifier: 
+  nombreCliente: Vance Brooks
+  edad: 25
+  fotoDocumento: {fileID: 0}
+  tieneDocumentoFalso: 0
+  spriteCuerpoCliente: {fileID: 0}
+  vestimenta: 1
+  estaEbrio: 0
+  portaArmas: 1
+  dialogoAlEntrar: "Tranquilo, el hierro est\xE1 bien guardado bajo la chaqueta.
+    D\xE9jame pasar."
+  dialogoAlSerRechazado: "\xBFEn serio? Te vas a arrepentir de ponerme peros esta
+    noche."

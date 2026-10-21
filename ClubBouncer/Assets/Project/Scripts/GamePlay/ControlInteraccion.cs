@@ -39,6 +39,14 @@ public class ControlInteraccion : MonoBehaviour
     public void LlegoNPC()
     {
         npcEnLaPuerta = true;
+        tarjetaAbierta = false; // Permitir abrir la tarjeta de nuevo para este nuevo NPC
+
+        // Limpiar mensaje de resultado anterior al llegar un nuevo cliente
+        if (textoAvisoResultado != null) 
+        {
+            textoAvisoResultado.text = "";
+        }
+
         if (botonInspeccionar != null)
         {
             botonInspeccionar.SetActive(true);
@@ -90,7 +98,7 @@ public class ControlInteraccion : MonoBehaviour
 
             if (clienteActual != null)
             {
-                // Capturamos el mensaje largo y detallado del EvaluadorPortero
+                // Capturamos el mensaje detallado del EvaluadorPortero
                 string mensajeResultado = evaluador.DecidirEntrada(clienteActual, permitioPaso);
 
                 // Lo mostramos en pantalla
@@ -99,8 +107,8 @@ public class ControlInteraccion : MonoBehaviour
                     textoAvisoResultado.text = mensajeResultado;
                 }
 
-                // Avanzamos al siguiente cliente
-                generador.SiguienteCliente();
+                // NOTA: Eliminamos generador.SiguienteCliente() de aquí 
+                // porque ya se llama de forma controlada cuando el NPC reinicia su posición en MovimientoNPC.cs
             }
             else
             {
@@ -125,14 +133,12 @@ public class ControlInteraccion : MonoBehaviour
             }
         }
 
-        CerrarTarjeta();
+        CerrarTarjetaTemporal();
     }
 
-    private void CerrarTarjeta()
+    private void CerrarTarjetaTemporal()
     {
-        tarjetaAbierta = false;
-        npcEnLaPuerta = false;
-
+        // Ocultamos la tarjeta visualmente al tomar la decisión, pero mantenemos el flujo listo
         if (tarjetaID != null)
         {
             tarjetaID.SetActive(false);
