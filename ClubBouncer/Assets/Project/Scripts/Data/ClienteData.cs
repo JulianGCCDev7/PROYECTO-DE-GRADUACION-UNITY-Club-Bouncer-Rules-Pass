@@ -19,10 +19,14 @@ public class ClienteData : ScriptableObject
     public bool tieneDocumentoFalso;
 
     [Header("Atributos del Cliente")]
-    public Sprite spriteCuerpoCliente;
     public TipoVestimenta vestimenta;
     public bool estaEbrio;
     public bool portaArmas;
+
+    [Header("Sprites de Animación y Poses")]
+    public Sprite spriteLateralCaminando;
+    public Sprite spriteLateralParado;
+    public Sprite spriteFrontal;
 
     [Header("Respuesta Narrativa")]
     [TextArea(2, 4)]

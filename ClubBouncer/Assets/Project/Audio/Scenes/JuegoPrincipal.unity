@@ -25405,6 +25405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reglaActual: {fileID: 11400000, guid: 031125bef7ffbf648a3fb4e75fb86998, type: 2}
+  controladorUI: {fileID: 0}
   clientesProcesados: 0
   aciertos: 0
   errores: 0
@@ -25461,8 +25462,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listaClientes:
-  - {fileID: 11400000, guid: d4c42d0b7e7d4b84d836db32d6c4b7fd, type: 2}
-  - {fileID: 11400000, guid: 4c851739ac9dbfe48874b440304f46fb, type: 2}
+  - {fileID: 11400000, guid: 0238b83ae41c37942bcd3350997668b9, type: 2}
+  - {fileID: 11400000, guid: 41c4b40b188446e40b79b282e28e2bdc, type: 2}
+  - {fileID: 11400000, guid: 122b3396c53968b489dc0478a33c0d9f, type: 2}
+  - {fileID: 11400000, guid: ff07a594053b05a41b22b2b14821f4fb, type: 2}
+  - {fileID: 11400000, guid: f5b5cdd69d169b14cb5ca901b95242b2, type: 2}
+  - {fileID: 11400000, guid: 0d785f823dfd6dc439fba02dcb0c4eb9, type: 2}
+  - {fileID: 11400000, guid: 94d4b53e5814d114ca8cc221b8247627, type: 2}
+  - {fileID: 11400000, guid: 1a38cf41ab5191f438c6f3548115422e, type: 2}
+  - {fileID: 11400000, guid: 88d9baf5380d3754c986af340b8f71c2, type: 2}
   controladorUI: {fileID: 296557081}
 --- !u!114 &296557083
 MonoBehaviour:
@@ -215862,6 +215870,14 @@ PrefabInstance:
       value: NPC 1
       objectReference: {fileID: 0}
     - target: {fileID: 8937695084351877939, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: evaluador
+      value: 
+      objectReference: {fileID: 296557079}
+    - target: {fileID: 8937695084351877939, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: generador
+      value: 
+      objectReference: {fileID: 296557082}
+    - target: {fileID: 8937695084351877939, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
       propertyPath: tarjetaID
       value: 
       objectReference: {fileID: 2123169392}
@@ -215869,6 +215885,10 @@ PrefabInstance:
       propertyPath: botonInspeccionar
       value: 
       objectReference: {fileID: 285418667}
+    - target: {fileID: 8937695084351877939, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: textoAvisoResultado
+      value: 
+      objectReference: {fileID: 1498934431}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

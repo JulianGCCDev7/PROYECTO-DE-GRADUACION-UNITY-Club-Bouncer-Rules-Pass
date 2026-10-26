@@ -24,14 +24,14 @@ public class GeneradorClientes : MonoBehaviour
                 controladorUI.MostrarCliente(clienteActual);
             }
 
-            // Actualizar el Sprite del NPC físico en la escena
+            // Actualizar el Sprite del NPC físico en la escena (Usando el sprite de caminata)
             MovimientoNPC npcMovimiento = FindObjectOfType<MovimientoNPC>();
-            if (npcMovimiento != null && clienteActual.spriteCuerpoCliente != null)
+            if (npcMovimiento != null && clienteActual.spriteLateralCaminando != null)
             {
                 SpriteRenderer sr = npcMovimiento.GetComponent<SpriteRenderer>();
                 if (sr != null)
                 {
-                    sr.sprite = clienteActual.spriteCuerpoCliente;
+                    sr.sprite = clienteActual.spriteLateralCaminando;
                 }
             }
         }
