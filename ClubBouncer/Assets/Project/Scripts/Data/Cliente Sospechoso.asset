@@ -16,10 +16,12 @@ MonoBehaviour:
   edad: 19
   fotoDocumento: {fileID: 0}
   tieneDocumentoFalso: 1
-  spriteCuerpoCliente: {fileID: 0}
   vestimenta: 1
   estaEbrio: 1
   portaArmas: 1
+  spriteLateralCaminando: {fileID: 21300000, guid: cce1288c2342a214996375b1e6f137bb, type: 3}
+  spriteLateralParado: {fileID: 21300000, guid: 1a7b99689c1f3824789062b0b218e2f4, type: 3}
+  spriteFrontal: {fileID: 21300000, guid: 91e1c6b7fdaf82a47bfde7ebdb1b935a, type: 3}
   dialogoAlEntrar: "\xBFQu\xE9 pasa, viejo? D\xE9jame pasar, la noche es joven."
   dialogoAlSerRechazado: "\xA1\xBFNo sabes qui\xE9n soy?! Te vas a arrepentir de
     esto."

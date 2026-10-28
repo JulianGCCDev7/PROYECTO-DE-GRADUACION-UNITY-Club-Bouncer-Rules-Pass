@@ -66,6 +66,13 @@ public class ControlInteraccion : MonoBehaviour
         {
             tarjetaID.SetActive(true);
         }
+
+        // AQUÍ ESTÁ LA MAGIA: Ordenamos al MovimientoNPC que cambie al sprite de frente
+        MovimientoNPC npcActual = FindObjectOfType<MovimientoNPC>();
+        if (npcActual != null)
+        {
+            npcActual.CambiarAFrontal();
+        }
     }
 
     public void BotonAceptar()
@@ -106,9 +113,6 @@ public class ControlInteraccion : MonoBehaviour
                 {
                     textoAvisoResultado.text = mensajeResultado;
                 }
-
-                // NOTA: Eliminamos generador.SiguienteCliente() de aquí 
-                // porque ya se llama de forma controlada cuando el NPC reinicia su posición en MovimientoNPC.cs
             }
             else
             {

@@ -5,9 +5,6 @@ public class MovimientoNPC : MonoBehaviour
     [Header("Configuración de Movimiento")]
     public float velocidad = 2f;
 
-    [Header("Sprite de Reposo (Frente)")]
-    public Sprite spriteIdleFrente;
-
     private Transform puntoDestino;
     private Transform puntoSalida;
     private Transform puntoInicio;
@@ -17,6 +14,9 @@ public class MovimientoNPC : MonoBehaviour
     private bool haLlegado = false;
     private bool estaSaliendo = false;
     private Vector3 posicionInicial;
+
+    // Almacenamos el cliente actual para usar sus 3 sprites
+    private ClienteData clienteActual;
 
     void Start()
     {
@@ -40,8 +40,6 @@ public class MovimientoNPC : MonoBehaviour
         {
             posicionInicial = transform.position;
         }
-
-        IniciarCaminata();
     }
 
     void Update()
@@ -74,19 +72,45 @@ public class MovimientoNPC : MonoBehaviour
         }
     }
 
+    // Este método lo llama el GeneradorClientes al iniciar o pasar de cliente
+    public void EstablecerCliente(ClienteData datos)
+    {
+        clienteActual = datos;
+        haLlegado = false;
+        estaSaliendo = false;
+        transform.position = posicionInicial;
+        IniciarCaminata();
+    }
+
     void LlegarAPuerta()
     {
         haLlegado = true;
 
+        // Desactivamos el animator para que deje mostrar el sprite estático de perfil
         if (animator != null) animator.enabled = false;
-        if (spriteRenderer != null && spriteIdleFrente != null) spriteRenderer.sprite = spriteIdleFrente;
+
+        if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralParado != null)
+        {
+            spriteRenderer.sprite = clienteActual.spriteLateralParado;
+        }
 
         FindObjectOfType<ControlInteraccion>()?.LlegoNPC();
+    }
+
+    // Llama a este método cuando quieras ponerlo de frente (al abrir la tarjeta/UI)
+    public void CambiarAFrontal()
+    {
+        if (animator != null) animator.enabled = false;
+
+        if (spriteRenderer != null && clienteActual != null && clienteActual.spriteFrontal != null)
+        {
+            spriteRenderer.sprite = clienteActual.spriteFrontal;
+        }
     }
     
     public void AccionAceptar()
     {
-        // Espera 1.5 segundos antes de reiniciar y limpiar el texto cuando es aceptado
+        CambiarAFrontal();
         Invoke(nameof(ReiniciarAlPuntoInicial), 1.5f);
     }
 
@@ -96,6 +120,11 @@ public class MovimientoNPC : MonoBehaviour
         {
             animator.enabled = true;
             animator.Play("Animacion NPC Caminando", 0, 0f);
+        }
+
+        if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralCaminando != null)
+        {
+            spriteRenderer.sprite = clienteActual.spriteLateralCaminando;
         }
 
         if (spriteRenderer != null)
@@ -112,22 +141,17 @@ public class MovimientoNPC : MonoBehaviour
         haLlegado = false;
         transform.position = posicionInicial;
 
-        // Limpiar el texto de aviso buscando el ControladorUI que es donde vive el texto
         ControladorUI controlUI = FindObjectOfType<ControladorUI>();
         if (controlUI != null && controlUI.textoAvisoResultado != null)
         {
             controlUI.textoAvisoResultado.text = "";
         }
 
-        // Cargar el siguiente cliente en la lista
         GeneradorClientes generador = FindObjectOfType<GeneradorClientes>();
         if (generador != null)
         {
             generador.SiguienteCliente();
         }
-
-        // Reiniciar la caminata
-        IniciarCaminata();
     }
 
     private void IniciarCaminata()
@@ -136,6 +160,11 @@ public class MovimientoNPC : MonoBehaviour
         {
             animator.enabled = true;
             animator.Play("Animacion NPC Caminando", 0, 0f);
+        }
+
+        if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralCaminando != null)
+        {
+            spriteRenderer.sprite = clienteActual.spriteLateralCaminando;
         }
     }
 }
