@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreCliente: Brutus Miller
   edad: 42
-  fotoDocumento: {fileID: 0}
+  fotoDocumento: {fileID: 21300000, guid: 70237b42cf346e54cbc70a5d99a69d6d, type: 3}
   tieneDocumentoFalso: 0
-  spriteCuerpoCliente: {fileID: 0}
   vestimenta: 1
   estaEbrio: 1
   portaArmas: 1
+  controladorAnimator: {fileID: 9100000, guid: a893fe970af7e8e4ea930a7a05d6b1b0, type: 2}
+  spriteLateralCaminando: {fileID: 21300000, guid: 6d0d428a84c93314b9a5efe87f9df344, type: 3}
+  spriteLateralParado: {fileID: 21300000, guid: c02222dd5e41ae04aba8582ee85cf9d6, type: 3}
+  spriteFrontal: {fileID: 21300000, guid: ca987c04059559b4ea2d674841d4c5ab, type: 3}
   dialogoAlEntrar: "\xC1breme el paso antes de que pierda la paciencia y rompa algo."
   dialogoAlSerRechazado: "\xA1Maldito gorila de puerta! \xA1Vas a ver lo que te pasa
     por rechazarme!"

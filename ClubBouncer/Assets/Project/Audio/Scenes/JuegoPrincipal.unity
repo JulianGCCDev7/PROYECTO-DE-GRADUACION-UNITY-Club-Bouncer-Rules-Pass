@@ -25444,7 +25444,8 @@ MonoBehaviour:
   textoEdad: {fileID: 295747772}
   textoVestimenta: {fileID: 1196740682}
   textoEstado: {fileID: 1860949796}
-  imagenFoto: {fileID: 1694086002}
+  imagenFotoPerfil: {fileID: 1694086002}
+  textoDialogoNPC: {fileID: 0}
   textoDinero: {fileID: 644025279}
   textoErrores: {fileID: 2128646492}
   textoAvisoResultado: {fileID: 1498934431}
@@ -25462,8 +25463,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listaClientes:
-  - {fileID: 11400000, guid: 0238b83ae41c37942bcd3350997668b9, type: 2}
-  - {fileID: 11400000, guid: 41c4b40b188446e40b79b282e28e2bdc, type: 2}
+  - {fileID: 11400000, guid: f5b5cdd69d169b14cb5ca901b95242b2, type: 2}
+  - {fileID: 11400000, guid: 1a38cf41ab5191f438c6f3548115422e, type: 2}
   - {fileID: 11400000, guid: 122b3396c53968b489dc0478a33c0d9f, type: 2}
   - {fileID: 11400000, guid: ff07a594053b05a41b22b2b14821f4fb, type: 2}
   - {fileID: 11400000, guid: f5b5cdd69d169b14cb5ca901b95242b2, type: 2}
@@ -215826,12 +215827,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1647487137911384812, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647487137911384812, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647487137911384812, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647487137911384812, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.31
+      value: -7.02
       objectReference: {fileID: 0}
     - target: {fileID: 1647487137911384812, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.42
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 1647487137911384812, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -215869,6 +215882,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3155606242078075022, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5f4c357f8e892d940a559a6dedf9a4d2, type: 2}
+    - target: {fileID: 3260246308252206083, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 45dbe6e19930db04c8d60c3f39522545, type: 3}
     - target: {fileID: 8937695084351877939, guid: 543b3014fb494af43acc7cd2a5e72f6a, type: 3}
       propertyPath: evaluador
       value: 

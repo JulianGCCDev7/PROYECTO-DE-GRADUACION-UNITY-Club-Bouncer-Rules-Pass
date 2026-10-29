@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MovimientoNPC : MonoBehaviour
@@ -15,7 +16,6 @@ public class MovimientoNPC : MonoBehaviour
     private bool estaSaliendo = false;
     private Vector3 posicionInicial;
 
-    // Almacenamos el cliente actual para usar sus 3 sprites
     private ClienteData clienteActual;
 
     void Start()
@@ -23,7 +23,6 @@ public class MovimientoNPC : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Buscar puntos de referencia
         GameObject objetoDestino = GameObject.Find("PuntoDestinoPuerto");
         GameObject objetoSalida = GameObject.Find("PuntoSalidaDerecha");
         GameObject objetoInicio = GameObject.Find("PuntoInicioIzquierda");
@@ -44,7 +43,6 @@ public class MovimientoNPC : MonoBehaviour
 
     void Update()
     {
-        // 1. Si fue RECHAZADO: camina hacia la derecha (salida)
         if (estaSaliendo && puntoSalida != null)
         {
             float paso = velocidad * Time.deltaTime;
@@ -60,7 +58,6 @@ public class MovimientoNPC : MonoBehaviour
 
         if (puntoDestino == null || haLlegado) return;
 
-        // 2. Movimiento NORMAL hacia la puerta del club
         float pasoNormal = velocidad * Time.deltaTime;
         Vector3 objetivo = new Vector3(puntoDestino.position.x, transform.position.y, transform.position.z);
         
@@ -72,13 +69,19 @@ public class MovimientoNPC : MonoBehaviour
         }
     }
 
-    // Este método lo llama el GeneradorClientes al iniciar o pasar de cliente
     public void EstablecerCliente(ClienteData datos)
     {
         clienteActual = datos;
         haLlegado = false;
         estaSaliendo = false;
         transform.position = posicionInicial;
+
+        // Asignamos el controlador exclusivo que viene del ScriptableObject
+        if (animator != null && clienteActual != null && clienteActual.controladorAnimator != null)
+        {
+            animator.runtimeAnimatorController = clienteActual.controladorAnimator;
+        }
+
         IniciarCaminata();
     }
 
@@ -86,8 +89,10 @@ public class MovimientoNPC : MonoBehaviour
     {
         haLlegado = true;
 
-        // Desactivamos el animator para que deje mostrar el sprite estático de perfil
-        if (animator != null) animator.enabled = false;
+        if (animator != null) 
+        {
+            animator.enabled = false;
+        }
 
         if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralParado != null)
         {
@@ -97,7 +102,6 @@ public class MovimientoNPC : MonoBehaviour
         FindObjectOfType<ControlInteraccion>()?.LlegoNPC();
     }
 
-    // Llama a este método cuando quieras ponerlo de frente (al abrir la tarjeta/UI)
     public void CambiarAFrontal()
     {
         if (animator != null) animator.enabled = false;
@@ -119,7 +123,7 @@ public class MovimientoNPC : MonoBehaviour
         if (animator != null)
         {
             animator.enabled = true;
-            animator.Play("Animacion NPC Caminando", 0, 0f);
+            // El controlador propio ya sabe qué animación reproducir al encenderse
         }
 
         if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralCaminando != null)
@@ -159,7 +163,6 @@ public class MovimientoNPC : MonoBehaviour
         if (animator != null)
         {
             animator.enabled = true;
-            animator.Play("Animacion NPC Caminando", 0, 0f);
         }
 
         if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralCaminando != null)

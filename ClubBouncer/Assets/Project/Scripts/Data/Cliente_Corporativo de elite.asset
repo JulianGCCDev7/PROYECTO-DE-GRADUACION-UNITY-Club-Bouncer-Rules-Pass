@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreCliente: Kaelen Thorne
   edad: 34
-  fotoDocumento: {fileID: 0}
+  fotoDocumento: {fileID: 21300000, guid: 6de3bbdf655bdbe4690c6265766256fc, type: 3}
   tieneDocumentoFalso: 0
-  spriteCuerpoCliente: {fileID: 0}
   vestimenta: 0
   estaEbrio: 0
   portaArmas: 0
+  controladorAnimator: {fileID: 9100000, guid: 60c4c2b0d31eb524eb959c049514a647, type: 2}
+  spriteLateralCaminando: {fileID: 0}
+  spriteLateralParado: {fileID: 0}
+  spriteFrontal: {fileID: 0}
   dialogoAlEntrar: "Tengo una reserva en el \xE1rea VIP. Ap\xFArate."
   dialogoAlSerRechazado: "Esto es inaceptable. Llamar\xE9 a los superiores de este
     antro"

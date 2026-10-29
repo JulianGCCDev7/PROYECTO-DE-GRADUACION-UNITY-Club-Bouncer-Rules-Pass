@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreCliente: Jaxson Vance
   edad: 19
-  fotoDocumento: {fileID: 0}
+  fotoDocumento: {fileID: 21300000, guid: d842bc731f9989441b48158a3ecc48bc, type: 3}
   tieneDocumentoFalso: 1
   vestimenta: 1
   estaEbrio: 1
   portaArmas: 1
+  controladorAnimator: {fileID: 9100000, guid: 12e4034d9c84ea942b1d56c28a0b4e81, type: 2}
   spriteLateralCaminando: {fileID: 21300000, guid: cce1288c2342a214996375b1e6f137bb, type: 3}
   spriteLateralParado: {fileID: 21300000, guid: 1a7b99689c1f3824789062b0b218e2f4, type: 3}
   spriteFrontal: {fileID: 21300000, guid: 91e1c6b7fdaf82a47bfde7ebdb1b935a, type: 3}

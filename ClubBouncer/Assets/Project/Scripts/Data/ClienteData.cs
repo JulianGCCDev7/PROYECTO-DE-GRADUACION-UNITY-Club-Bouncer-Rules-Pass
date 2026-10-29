@@ -23,6 +23,9 @@ public class ClienteData : ScriptableObject
     public bool estaEbrio;
     public bool portaArmas;
 
+    [Header("Animación y Controladores Visuales")]
+    public RuntimeAnimatorController controladorAnimator; // <-- Controlador de animación específico de su carpeta
+
     [Header("Sprites de Animación y Poses")]
     public Sprite spriteLateralCaminando;
     public Sprite spriteLateralParado;

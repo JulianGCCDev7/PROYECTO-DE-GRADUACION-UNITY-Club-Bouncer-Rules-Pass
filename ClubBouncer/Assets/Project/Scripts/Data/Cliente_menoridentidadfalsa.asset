@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreCliente: Aria Chen
   edad: 17
-  fotoDocumento: {fileID: 0}
+  fotoDocumento: {fileID: 21300000, guid: b493f8df2e7dcee448c7aa2a83f1ce3d, type: 3}
   tieneDocumentoFalso: 1
-  spriteCuerpoCliente: {fileID: 0}
   vestimenta: 1
   estaEbrio: 0
   portaArmas: 0
+  controladorAnimator: {fileID: 9100000, guid: 6ba1d993e58da3046b43d470c7c5ccdf, type: 2}
+  spriteLateralCaminando: {fileID: 21300000, guid: 93a3490eb963b99489fbf1e7c7338200, type: 3}
+  spriteLateralParado: {fileID: 21300000, guid: 51fa96df82109d944bf53e0565ab0474, type: 3}
+  spriteFrontal: {fileID: 21300000, guid: 8e035ef6d1e897b49a473640ff0b51a5, type: 3}
   dialogoAlEntrar: "\xA1Hola! \xBFVes? Todo en regla, totalmente mayor de edad."
   dialogoAlSerRechazado: "\xA1Oye, mi identificaci\xF3n es leg\xEDtima! Eres un exagerado."

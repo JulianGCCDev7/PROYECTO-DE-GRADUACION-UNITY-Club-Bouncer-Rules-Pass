@@ -16,7 +16,10 @@ public class ControladorUI : MonoBehaviour
     public TextMeshProUGUI textoEdad;
     public TextMeshProUGUI textoVestimenta;
     public TextMeshProUGUI textoEstado;
-    public Image imagenFoto;
+    public Image imagenFotoPerfil; // <-- Arrastra aquí tu objeto "FotoPerfil" de la tarjeta
+
+    [Header("Elementos de Diálogo / Narrativa")]
+    public TextMeshProUGUI textoDialogoNPC; // <-- Arrastra aquí el texto del diálogo en pantalla si lo usas
 
     [Header("Estadísticas en Pantalla")]
     public TextMeshProUGUI textoDinero;
@@ -34,6 +37,10 @@ public class ControladorUI : MonoBehaviour
         if (textoAvisoResultado != null)
         {
             textoAvisoResultado.text = "";
+        }
+        if (textoDialogoNPC != null)
+        {
+            textoDialogoNPC.text = "";
         }
     }
 
@@ -58,11 +65,20 @@ public class ControladorUI : MonoBehaviour
         {
             textoEstado.text = "Estado: " + (cliente.estaEbrio ? "Ebrio" : "Sobrio");
         }
+
+        // CARGAR LA FOTO DEL DOCUMENTO EN LA TARJETA AUTOMÁTICAMENTE
+        if (imagenFotoPerfil != null && cliente.fotoDocumento != null)
+        {
+            imagenFotoPerfil.sprite = cliente.fotoDocumento;
+        }
+
+        // MOSTRAR DIÁLOGO DE ENTRADA AUTOMÁTICAMENTE
+        if (textoDialogoNPC != null)
+        {
+            textoDialogoNPC.text = cliente.dialogoAlEntrar;
+        }
     }
 
-    /// <summary>
-    /// Método llamado por EvaluadorPortero para actualizar los contadores de dinero y errores.
-    /// </summary>
     public void ActualizarEstadisticas(int dinero, int errores)
     {
         if (textoDinero != null) textoDinero.text = "Dinero: $" + dinero;
@@ -92,6 +108,11 @@ public class ControladorUI : MonoBehaviour
         if (evaluador != null && clienteActual != null)
         {
             string mensajeResultado = evaluador.DecidirEntrada(clienteActual, aceptado);
+
+            if (!aceptado && textoDialogoNPC != null)
+            {
+                textoDialogoNPC.text = clienteActual.dialogoAlSerRechazado;
+            }
 
             if (textoAvisoResultado != null)
             {

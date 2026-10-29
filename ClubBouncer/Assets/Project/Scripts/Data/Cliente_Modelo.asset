@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreCliente: Sora Tanaka
   edad: 26
-  fotoDocumento: {fileID: 0}
+  fotoDocumento: {fileID: 21300000, guid: 1356d70bfe4d0204ca1aa8d6d167ef33, type: 3}
   tieneDocumentoFalso: 0
-  spriteCuerpoCliente: {fileID: 0}
   vestimenta: 0
   estaEbrio: 0
   portaArmas: 0
+  controladorAnimator: {fileID: 9100000, guid: 8ce738319d58c8f48ac7dad423c6531d, type: 2}
+  spriteLateralCaminando: {fileID: 0}
+  spriteLateralParado: {fileID: 0}
+  spriteFrontal: {fileID: 0}
   dialogoAlEntrar: "Buenas noches. Vengo a disfrutar un rato de la m\xFAsica."
   dialogoAlSerRechazado: Entiendo las normas de la casa. Buenas noches.
