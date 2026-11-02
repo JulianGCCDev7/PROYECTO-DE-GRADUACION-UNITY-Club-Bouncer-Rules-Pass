@@ -6,6 +6,9 @@ public class GeneradorClientes : MonoBehaviour
     public List<ClienteData> listaClientes;
     public ControladorUI controladorUI;
     
+    [Header("Panel de Victoria")]
+    public GameObject panelVictoria; // Arrastra aquí tu PanelVictoria desde la jerarquía
+
     private int indiceActual = 0;
 
     private void Start()
@@ -24,7 +27,7 @@ public class GeneradorClientes : MonoBehaviour
                 controladorUI.MostrarCliente(clienteActual);
             }
 
-            // En lugar de cambiar el sprite aquí, le pasamos el cliente al MovimientoNPC
+            // Le pasamos el cliente al MovimientoNPC
             MovimientoNPC npcMovimiento = FindObjectOfType<MovimientoNPC>();
             if (npcMovimiento != null)
             {
@@ -34,9 +37,16 @@ public class GeneradorClientes : MonoBehaviour
         else
         {
             Debug.Log("¡Se terminaron los clientes de la fila por hoy!");
+            
             if (controladorUI != null)
             {
                 controladorUI.ToggleTarjeta(false);
+            }
+
+            // === AQUÍ ACTIVamos LA VICTORIA AUTOMÁTICAMENTE ===
+            if (panelVictoria != null)
+            {
+                panelVictoria.SetActive(true);
             }
         }
     }

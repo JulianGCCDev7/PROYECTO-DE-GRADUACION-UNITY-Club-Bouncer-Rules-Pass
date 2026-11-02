@@ -20,8 +20,8 @@ MonoBehaviour:
   estaEbrio: 0
   portaArmas: 1
   controladorAnimator: {fileID: 9100000, guid: 0ad02d895819c2c489f90e53ab200a50, type: 2}
-  spriteLateralCaminando: {fileID: 0}
-  spriteLateralParado: {fileID: 0}
-  spriteFrontal: {fileID: 0}
+  spriteLateralCaminando: {fileID: 21300000, guid: fd657fe2e40f0f749bfb35f939d6a727, type: 3}
+  spriteLateralParado: {fileID: 21300000, guid: 2b4b32188a813a14496bb69de8c1be40, type: 3}
+  spriteFrontal: {fileID: 21300000, guid: 0723f2b0dc728564db32092394e21821, type: 3}
   dialogoAlEntrar: Permiso, amigo. Solo vengo a pasar el rato...
   dialogoAlSerRechazado: ...Te sugiero que te apartes de mi camino, colega.

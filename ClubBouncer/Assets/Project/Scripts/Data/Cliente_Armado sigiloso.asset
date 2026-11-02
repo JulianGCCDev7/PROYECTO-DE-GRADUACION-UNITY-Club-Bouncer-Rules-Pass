@@ -20,9 +20,9 @@ MonoBehaviour:
   estaEbrio: 0
   portaArmas: 1
   controladorAnimator: {fileID: 9100000, guid: 1f5d6ca7948bddd4fa29f4e06c0dcbe0, type: 2}
-  spriteLateralCaminando: {fileID: 0}
-  spriteLateralParado: {fileID: 0}
-  spriteFrontal: {fileID: 0}
+  spriteLateralCaminando: {fileID: 21300000, guid: 45dbe6e19930db04c8d60c3f39522545, type: 3}
+  spriteLateralParado: {fileID: 21300000, guid: 8d26cf52314062b43a2759d24a452229, type: 3}
+  spriteFrontal: {fileID: 21300000, guid: 73bbe8745780b4a4489af2f5c00987cd, type: 3}
   dialogoAlEntrar: "Tranquilo, el hierro est\xE1 bien guardado bajo la chaqueta.
     D\xE9jame pasar."
   dialogoAlSerRechazado: "\xBFEn serio? Te vas a arrepentir de ponerme peros esta

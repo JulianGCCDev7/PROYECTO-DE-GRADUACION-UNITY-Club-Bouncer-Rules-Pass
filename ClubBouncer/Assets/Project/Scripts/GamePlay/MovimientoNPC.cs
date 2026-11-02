@@ -18,7 +18,7 @@ public class MovimientoNPC : MonoBehaviour
 
     private ClienteData clienteActual;
 
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -38,6 +38,16 @@ public class MovimientoNPC : MonoBehaviour
         else
         {
             posicionInicial = transform.position;
+        }
+    }
+
+    void Start()
+    {
+        // Si por alguna razón no se ha establecido el cliente, intentamos tomar el primero del generador
+        if (clienteActual == null)
+        {
+            GeneradorClientes generador = FindObjectOfType<GeneradorClientes>();
+            // Si tu generador tiene una forma de pasar el cliente actual, lo pillamos aquí.
         }
     }
 
@@ -76,10 +86,17 @@ public class MovimientoNPC : MonoBehaviour
         estaSaliendo = false;
         transform.position = posicionInicial;
 
-        // Asignamos el controlador exclusivo que viene del ScriptableObject
+        if (animator == null) animator = GetComponent<Animator>();
+
+        // ASIGNACIÓN OBLIGATORIA DEL CONTROLADOR
         if (animator != null && clienteActual != null && clienteActual.controladorAnimator != null)
         {
             animator.runtimeAnimatorController = clienteActual.controladorAnimator;
+            Debug.Log("Controlador asignado con éxito a: " + clienteActual.name);
+        }
+        else
+        {
+            Debug.LogWarning("¡Falta el controlador Animator en el ClienteData o el Animator es nulo!");
         }
 
         IniciarCaminata();
@@ -122,13 +139,7 @@ public class MovimientoNPC : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.enabled = true;
-            // El controlador propio ya sabe qué animación reproducir al encenderse
-        }
-
-        if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralCaminando != null)
-        {
-            spriteRenderer.sprite = clienteActual.spriteLateralCaminando;
+            animator.enabled = true; 
         }
 
         if (spriteRenderer != null)
@@ -162,12 +173,7 @@ public class MovimientoNPC : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.enabled = true;
-        }
-
-        if (spriteRenderer != null && clienteActual != null && clienteActual.spriteLateralCaminando != null)
-        {
-            spriteRenderer.sprite = clienteActual.spriteLateralCaminando;
+            animator.enabled = true; 
         }
     }
 }

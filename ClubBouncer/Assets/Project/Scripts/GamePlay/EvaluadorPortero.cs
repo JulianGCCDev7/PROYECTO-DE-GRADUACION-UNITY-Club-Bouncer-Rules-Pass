@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EvaluadorPortero : MonoBehaviour
 {
@@ -8,11 +9,18 @@ public class EvaluadorPortero : MonoBehaviour
     [Header("Referencias UI")]
     public ControladorUI controladorUI; // Referencia para actualizar los textos del dinero/errores en pantalla
 
+    [Header("Límites de Errores")]
+    public int erroresMaximos = 3;
+
     [Header("Estadísticas del Turno")]
     public int clientesProcesados = 0;
     public int aciertos = 0;
     public int errores = 0;
     public int dineroAcumulado = 0;
+
+    [Header("Paneles de Fin de Juego (UI)")]
+    public GameObject panelGameOver;
+    public GameObject panelVictoria;
 
     private void Start()
     {
@@ -21,6 +29,9 @@ public class EvaluadorPortero : MonoBehaviour
             controladorUI = FindObjectOfType<ControladorUI>();
         }
         
+        if (panelGameOver != null) panelGameOver.SetActive(false);
+        if (panelVictoria != null) panelVictoria.SetActive(false);
+
         // Actualizar la pantalla al iniciar la noche
         ActualizarHUD();
     }
@@ -95,14 +106,61 @@ public class EvaluadorPortero : MonoBehaviour
             // Decisión errónea
             errores++;
             dineroAcumulado -= penalizacion; // Penalización por error
-            mensajeResultado = $"¡Error! Decisión equivocada con {cliente.nombreCliente}. Errores: {errores}/3. Dinero: ${dineroAcumulado}";
+            mensajeResultado = $"¡Error! Decisión equivocada con {cliente.nombreCliente}. Errores: {errores}/{erroresMaximos}. Dinero: ${dineroAcumulado}";
             Debug.LogWarning($"<color=red>{mensajeResultado}</color>");
+
+            // Comprobamos si se llega al límite de errores para el Game Over
+            if (errores >= erroresMaximos)
+            {
+                TriggerGameOver();
+                return "¡GAME OVER! Has alcanzado los 3 errores permitidos.";
+            }
         }
 
         // Actualizamos los contadores visuales en pantalla
         ActualizarHUD();
 
         return mensajeResultado;
+    }
+
+    /// <summary>
+    /// Se llama automáticamente cuando la lista de clientes se agota por completo sin perder.
+    /// </summary>
+    public void VerificarFinDeLista()
+    {
+        if (errores < erroresMaximos)
+        {
+            TriggerVictoria();
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        Debug.Log("¡GAME OVER! El juego ha terminado por errores.");
+        if (panelGameOver != null)
+        {
+            panelGameOver.SetActive(true);
+        }
+        Time.timeScale = 0f; // Pausa el tiempo del juego
+    }
+
+    private void TriggerVictoria()
+    {
+        Debug.Log("¡VICTORIA! Has completado la lista de clientes.");
+        if (panelVictoria != null)
+        {
+            panelVictoria.SetActive(true);
+        }
+        Time.timeScale = 0f; // Pausa el tiempo del juego
+    }
+
+    /// <summary>
+    /// Método para reiniciar la escena desde el botón UI de "Jugar de nuevo".
+    /// </summary>
+    public void ReiniciarJuego()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void ActualizarHUD()

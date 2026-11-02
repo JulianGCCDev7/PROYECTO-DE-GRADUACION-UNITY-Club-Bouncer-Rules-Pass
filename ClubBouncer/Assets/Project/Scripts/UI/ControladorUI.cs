@@ -16,10 +16,11 @@ public class ControladorUI : MonoBehaviour
     public TextMeshProUGUI textoEdad;
     public TextMeshProUGUI textoVestimenta;
     public TextMeshProUGUI textoEstado;
-    public Image imagenFotoPerfil; // <-- Arrastra aquí tu objeto "FotoPerfil" de la tarjeta
+    public TextMeshProUGUI textoArma; // <--- 1. NUEVA REFERENCIA PARA EL ARMA
+    public Image imagenFotoPerfil; 
 
     [Header("Elementos de Diálogo / Narrativa")]
-    public TextMeshProUGUI textoDialogoNPC; // <-- Arrastra aquí el texto del diálogo en pantalla si lo usas
+    public TextMeshProUGUI textoDialogoNPC; 
 
     [Header("Estadísticas en Pantalla")]
     public TextMeshProUGUI textoDinero;
@@ -31,6 +32,7 @@ public class ControladorUI : MonoBehaviour
 
     [Header("Cliente Actual de Prueba")]
     public ClienteData clienteActual;
+    private string textoRechazoPendiente = "";
 
     private void Start()
     {
@@ -41,6 +43,19 @@ public class ControladorUI : MonoBehaviour
         if (textoDialogoNPC != null)
         {
             textoDialogoNPC.text = "";
+        }
+    }
+
+    private void Update()
+    {
+        // Si hay un texto de rechazo en pantalla, si el jugador hace clic en cualquier lado, avanzamos
+        if (!string.IsNullOrEmpty(textoRechazoPendiente) && Input.GetMouseButtonDown(0))
+        {
+            textoRechazoPendiente = "";
+            if (generador != null)
+            {
+                generador.SiguienteCliente();
+            }
         }
     }
 
@@ -64,6 +79,16 @@ public class ControladorUI : MonoBehaviour
         if (textoEstado != null)
         {
             textoEstado.text = "Estado: " + (cliente.estaEbrio ? "Ebrio" : "Sobrio");
+        }
+
+        // <--- 2. LÓGICA PARA MOSTRAR SI PORTA ARMAS --->
+        if (textoArma != null)
+        {
+            string estadoArma = cliente.portaArmas ? "Arma: Sí (PELIGRO)" : "Arma: No";
+            textoArma.text = estadoArma;
+            
+            // Opcional: Pone el texto en rojo si lleva arma y en blanco si está limpio
+            textoArma.color = cliente.portaArmas ? Color.red : Color.white;
         }
 
         // CARGAR LA FOTO DEL DOCUMENTO EN LA TARJETA AUTOMÁTICAMENTE
@@ -109,9 +134,19 @@ public class ControladorUI : MonoBehaviour
         {
             string mensajeResultado = evaluador.DecidirEntrada(clienteActual, aceptado);
 
-            if (!aceptado && textoDialogoNPC != null)
+            if (textoDialogoNPC != null)
             {
-                textoDialogoNPC.text = clienteActual.dialogoAlSerRechazado;
+                if (!aceptado)
+                {
+                    // Guardamos y pintamos el texto de rechazo a la fuerza
+                    textoRechazoPendiente = clienteActual.dialogoAlSerRechazado;
+                    textoDialogoNPC.text = textoRechazoPendiente;
+                }
+                else
+                {
+                    textoDialogoNPC.text = clienteActual.dialogoAlEntrar;
+                    textoRechazoPendiente = "";
+                }
             }
 
             if (textoAvisoResultado != null)
@@ -120,17 +155,14 @@ public class ControladorUI : MonoBehaviour
             }
 
             ActualizarPantalla();
+            ToggleTarjeta(false);
             
-            if (generador != null)
+            // NO llamamos al siguiente cliente de golpe si fue rechazado, 
+            // dejamos que el texto se muestre.
+            if (aceptado && generador != null)
             {
                 generador.SiguienteCliente();
             }
-            
-            ToggleTarjeta(false);
-        }
-        else
-        {
-            Debug.LogWarning("Falta asignar el Evaluador o el Cliente Actual en ControladorUI.");
         }
     }
 }

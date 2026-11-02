@@ -17,5 +17,5 @@ MonoBehaviour:
   permitirArmas: 0
   vestimentaExigida: 0
   tituloNoche: Noche VIP
-  metaClientesCorrectos: 10
+  metaClientesCorrectos: 9
   penalizacionDineroError: 50

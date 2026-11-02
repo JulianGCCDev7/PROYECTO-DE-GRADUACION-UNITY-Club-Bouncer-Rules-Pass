@@ -20,8 +20,8 @@ MonoBehaviour:
   estaEbrio: 1
   portaArmas: 0
   controladorAnimator: {fileID: 9100000, guid: bebba05a183524d4faabac496bba459c, type: 2}
-  spriteLateralCaminando: {fileID: 0}
-  spriteLateralParado: {fileID: 0}
-  spriteFrontal: {fileID: 0}
+  spriteLateralCaminando: {fileID: 21300000, guid: f3c495259d9a60645ac124ddb7c4f1dd, type: 3}
+  spriteLateralParado: {fileID: 21300000, guid: 3781decb2c25de040a040ca7c8c0ac24, type: 3}
+  spriteFrontal: {fileID: 21300000, guid: f6e6702b5f552c84587a20ac6318f9c7, type: 3}
   dialogoAlEntrar: "\xA1Woohoo! \xA1A bailar se ha dicho!"
   dialogoAlSerRechazado: Ugh, aguafiestas... Me voy a otro club mejor.
